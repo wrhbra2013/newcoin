@@ -1,0 +1,16 @@
+{
+  "name": "newcoin",
+  "version": "1.0.0",
+  "description": "new blockchain",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wrh",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.19.2",
+    "require.js": "^1.0.0"
+  }
+}

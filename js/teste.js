@@ -54,6 +54,55 @@
             etapa('Historico antigo preservado no arquivo',
                 arquivo.periodo.chain.blocks.length === 2,
                 'blocos arquivados: ' + arquivo.periodo.chain.blocks.length);
+
+            // Notas de valor P2P offline
+            NewCoinNotasStore.reiniciar();
+            const nota = await NewCoinNotasStore.emitir({
+                valor: 100, moeda: 'NC', dias: 30,
+                portador: 'Wander', justificativa: 'Lastro de teste'
+            });
+            etapa('Nota de valor emitida com hash automatico',
+                /^[a-f0-9]{64}$/.test(nota.hash), nota.hash);
+            const validacaoNota = await NewCoinNotasStore.validarNota(nota);
+            etapa('Nota valida offline (hash, assinatura e validade)',
+                validacaoNota.valido, validacaoNota.erros.join('; ') || 'tudo conferiu');
+
+            const adulterada = JSON.parse(JSON.stringify(nota));
+            adulterada.justificativa = 'justificativa adulterada';
+            const validacaoAdulterada = await NewCoinNotasStore.validarNota(adulterada);
+            etapa('Adulteracao da nota detectada',
+                !validacaoAdulterada.valido, validacaoAdulterada.erros.join('; '));
+
+            const arquivoExclusao = await NewCoinNotasStore.excluir({ id: nota.id, motivo: 'teste' });
+            const validacaoExcluida = await NewCoinNotasStore.validarNota(nota);
+            etapa('Exclusao por timestamp posterior',
+                !validacaoExcluida.valido && Date.parse(arquivoExclusao.criadoEm) > Date.parse(nota.criadoEm),
+                arquivoExclusao.criadoEm);
+
+            const nota2 = await NewCoinNotasStore.emitir({
+                valor: 50, moeda: 'NC', dias: 30,
+                portador: 'Cleusa', justificativa: 'Segunda nota'
+            });
+            NewCoinNotasStore.reiniciar();
+            const importada = await NewCoinNotasStore.importar(nota2);
+            const validacaoImportada = await NewCoinNotasStore.validarNota(importada.nota);
+            etapa('Nota exportada e importada em carteira limpa',
+                importada.tipo === 'nota' && validacaoImportada.valido, importada.mensagem);
+
+            // Replay: uma nota com sequencia menor que a ultima conhecida deve ser rejeitada.
+            const replay = NewCoinNotas.NotaValor.deJSON(JSON.parse(JSON.stringify(nota)));
+            replay.id = 'ncv-replay-' + Date.now();
+            replay.sequencia = nota2.sequencia - 1;
+            replay.estado = { situacao: 'ativa' };
+            replay.hash = await replay.calcularHash();
+            await replay.assinar(await NewCoinStore.carteira());
+            let replayRejeitado = false;
+            try {
+                await NewCoinNotasStore.importar(replay.toJSON());
+            } catch (erro) {
+                replayRejeitado = true;
+            }
+            etapa('Replay de sequencia monotônica rejeitado', replayRejeitado);
         } catch (erro) {
             etapa('Erro inesperado', false, erro.message);
         } finally {

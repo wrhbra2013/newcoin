@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newCoin - notas de valor</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-transacao pagina-notas">
+    <header class="cabecalho">
+        <div class="marca">
+            <span class="marca-simbolo" aria-hidden="true">◈</span>
+            <div>
+                <h1>newCoin</h1>
+                <p>Protótipo de blockchain local</p>
+            </div>
+        </div>
+        <nav aria-label="Navegação principal">
+            <a href="newcoin.html">Nova transação</a>
+            <a href="transacoes.html">Transações</a>
+            <a href="notas.html" aria-current="page">Notas de valor</a>
+            <a href="teste.html">Autoteste</a>
+        </nav>
+    </header>
+
+    <main class="conteudo conteudo-inicio">
+        <section class="apresentacao">
+            <span class="etiqueta">Valor P2P offline</span>
+            <h2>Notas de valor</h2>
+            <p>Uma nota é um arquivo assinado que pode ser copiado entre máquinas. A inclusão acontece por sequência monotônica; a exclusão, por um arquivo com timestamp posterior.</p>
+        </section>
+
+        <div class="grade-inicio">
+            <section class="cartao cartao-formulario">
+                <div class="cabecalho-cartao">
+                    <span class="numero-etapa">01</span>
+                    <div>
+                        <h3>Emitir nota</h3>
+                        <p>Hash e assinatura gerados automaticamente.</p>
+                    </div>
+                </div>
+
+                <form id="form-nota" class="formulario">
+                    <div class="campo grade-campos">
+                        <div>
+                            <label for="valor-nota">Valor</label>
+                            <input type="number" id="valor-nota" step="0.01" min="0.01" placeholder="0.00" required>
+                        </div>
+                        <div>
+                            <label for="moeda-nota">Moeda</label>
+                            <input type="text" id="moeda-nota" value="NC" maxlength="6" required>
+                        </div>
+                        <div>
+                            <label for="dias-nota">Validade (dias)</label>
+                            <input type="number" id="dias-nota" value="30" min="1" step="1" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="portador-nota">Portador <span>(chave pública ou identificador)</span></label>
+                        <input type="text" id="portador-nota" placeholder="Vazio = sua chave pública">
+                        <p class="dica">O portador fica registrado no payload e entra no hash.</p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="justificativa-nota">Justificativa</label>
+                        <textarea id="justificativa-nota" rows="3" placeholder="Ex.:Pagamento de consultoria" required></textarea>
+                    </div>
+
+                    <button type="submit" class="botao-enviar">
+                        <span>Emitir nota</span><span aria-hidden="true">→</span>
+                    </button>
+                </form>
+
+                <p id="status-emissao" class="status" role="status" aria-live="polite"></p>
+            </section>
+
+            <aside class="cartao cartao-periodo">
+                <div class="cabecalho-cartao">
+                    <span class="numero-etapa">02</span>
+                    <div>
+                        <h3>Importar arquivo</h3>
+                        <p>Receba notas e exclusões de outra máquina.</p>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="arquivo-importar">Arquivo .json</label>
+                    <input type="file" id="arquivo-importar" accept=".json,application/json">
+                </div>
+
+                <div class="campo">
+                    <label for="json-importar">Ou cole o JSON</label>
+                    <textarea id="json-importar" rows="6" placeholder='{"tipo":"nota-valor", ...}'></textarea>
+                </div>
+
+                <button type="button" id="btn-importar" class="botao-enviar">
+                    <span>Importar e verificar</span><span aria-hidden="true">↥</span>
+                </button>
+
+                <p id="status-importacao" class="status" role="status" aria-live="polite"></p>
+            </aside>
+        </div>
+
+        <section class="cartao">
+            <div class="cabecalho-cartao">
+                <span class="numero-etapa">03</span>
+                <div>
+                    <h3>Notas registradas</h3>
+                    <p>Sequência monotônica por emissor; exclusões por timestamp posterior.</p>
+                </div>
+            </div>
+            <div id="lista-notas" class="lista-notas"></div>
+        </section>
+
+        <section class="cartao">
+            <h3>Arquivos de exclusão</h3>
+            <div id="lista-exclusoes" class="lista-notas"></div>
+        </section>
+    </main>
+
+    <footer class="rodape">newCoin &middot; protótipo estático &middot; sem servidor e sem API</footer>
+
+    <script src="js/index.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/nota.js"></script>
+    <script src="js/notas-store.js"></script>
+    <script src="js/notas.js"></script>
+</body>
+</html>

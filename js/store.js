@@ -157,6 +157,7 @@
     async function reiniciar() {
         global.localStorage.removeItem(CHAVE_ESTADO);
         global.localStorage.removeItem(CHAVE_CARTEIRA);
+        global.localStorage.removeItem('newcoin.notas.v1');
         await carregarEstado();
     }
 

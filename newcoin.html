@@ -3,64 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>newCoin - nova transacao</title>
+    <title>newCoin - nova transação</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="pagina-transacao">
     <header class="cabecalho">
-        <h1>newCoin</h1>
-        <nav>
-            <a href="newcoin.html">Nova transacao</a>
-            <a href="transacoes.html">Transacoes</a>
+        <div class="marca">
+            <span class="marca-simbolo" aria-hidden="true">◈</span>
+            <div>
+                <h1>newCoin</h1>
+                <p>Protótipo de blockchain local</p>
+            </div>
+        </div>
+        <nav aria-label="Navegação principal">
+            <a href="newcoin.html" aria-current="page">Nova transação</a>
+            <a href="transacoes.html">Transações</a>
             <a href="teste.html">Autoteste</a>
         </nav>
     </header>
 
-    <main class="conteudo">
-        <section class="cartao">
-            <h2>Nova transacao</h2>
-            <p class="aviso">
-                Prototipo estatico para teste: o hash, a assinatura e o timestamp sao gerados no navegador.
-            </p>
-
-            <form id="form-transacao">
-                <label for="origem">Origem</label>
-                <input type="text" id="origem" name="origem" placeholder="Ex.: Cleusa" required>
-
-                <label for="destino">Destino</label>
-                <input type="text" id="destino" name="destino" placeholder="Ex.: Wander" required>
-
-                <label for="valor">Valor</label>
-                <input type="number" id="valor" name="valor" step="0.01" min="0.01" placeholder="0.00" required>
-
-                <label for="justificativa">Justificativa (lastro da transacao)</label>
-                <textarea id="justificativa" name="justificativa" rows="3"
-                          placeholder="Ex.: Pagamento de servico de consultoria" required></textarea>
-
-                <button type="submit">Enviar transacao</button>
-            </form>
-
-            <p id="status" class="status" role="status" aria-live="polite"></p>
+    <main class="conteudo conteudo-inicio">
+        <section class="apresentacao">
+            <span class="etiqueta">Rede de teste</span>
+            <h2>Registre uma nova transação</h2>
+            <p>Cada envio gera automaticamente um hash SHA-256 e uma assinatura digital. A justificativa faz parte do lastro e não pode ser alterada depois.</p>
         </section>
 
-        <section class="cartao">
-            <h2>Periodo atual</h2>
-            <dl class="detalhes">
-                <dt>ID do periodo</dt>
-                <dd id="periodo-id" class="mono">...</dd>
-                <dt>Iniciado em</dt>
-                <dd id="periodo-inicio" class="mono">...</dd>
-                <dt>Chave publica da carteira</dt>
-                <dd id="carteira-chave" class="mono quebrar">...</dd>
-            </dl>
-            <p class="aviso">
-                A chave publica faz parte do payload do hash: qualquer alteracao na justificativa,
-                no valor ou na chave invalida a transacao.
-            </p>
-        </section>
+        <div class="grade-inicio">
+            <section class="cartao cartao-formulario">
+                <div class="cabecalho-cartao">
+                    <span class="numero-etapa">01</span>
+                    <div>
+                        <h3>Nova transação</h3>
+                        <p>Preencha os dados para gerar o bloco.</p>
+                    </div>
+                </div>
+
+                <form id="form-transacao" class="formulario">
+                    <div class="campo">
+                        <label for="origem">Origem</label>
+                        <div class="campo-entrada">
+                            <span class="icone" aria-hidden="true">↗</span>
+                            <input type="text" id="origem" name="origem" placeholder="Ex.: Cleusa" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="destino">Destino</label>
+                        <div class="campo-entrada">
+                            <span class="icone" aria-hidden="true">↘</span>
+                            <input type="text" id="destino" name="destino" placeholder="Ex.: Wander" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="valor">Valor</label>
+                        <div class="campo-entrada">
+                            <span class="prefixo" aria-hidden="true">₿</span>
+                            <input type="number" id="valor" name="valor" step="0.01" min="0.01" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="justificativa">Justificativa <span>(lastro da transação)</span></label>
+                        <textarea id="justificativa" name="justificativa" rows="3"
+                                  placeholder="Ex.: Pagamento de serviço de consultoria" required></textarea>
+                        <p class="dica">Descreva o motivo: esse texto entra no cálculo do hash.</p>
+                    </div>
+
+                    <button type="submit" class="botao-enviar">
+                        <span>Enviar transação</span><span aria-hidden="true">→</span>
+                    </button>
+                </form>
+
+                <p id="status" class="status" role="status" aria-live="polite"></p>
+            </section>
+
+            <aside class="cartao cartao-periodo">
+                <div class="cabecalho-cartao">
+                    <span class="numero-etapa">02</span>
+                    <div>
+                        <h3>Período atual</h3>
+                        <p>Dados do lote ativo.</p>
+                    </div>
+                </div>
+
+                <dl class="detalhes detalhes-inicio">
+                    <div class="detalhe-item">
+                        <dt>ID do período</dt>
+                        <dd id="periodo-id" class="mono">...</dd>
+                    </div>
+                    <div class="detalhe-item">
+                        <dt>Iniciado em</dt>
+                        <dd id="periodo-inicio" class="mono">...</dd>
+                    </div>
+                </dl>
+
+                <div class="chave-publica">
+                    <span class="rotulo">Chave pública da carteira</span>
+                    <code id="carteira-chave" class="mono quebrar">...</code>
+                </div>
+
+                <p class="aviso aviso-suave">
+                    A chave pública faz parte do payload do hash: qualquer alteração na justificativa,
+                    no valor ou na chave invalida a transação.
+                </p>
+            </aside>
+        </div>
     </main>
 
-    <footer class="rodape">newCoin &middot; prototipo estatico &middot; sem servidor e sem API</footer>
+    <footer class="rodape">newCoin &middot; protótipo estático &middot; sem servidor e sem API</footer>
 
     <script src="js/index.js"></script>
     <script src="js/store.js"></script>

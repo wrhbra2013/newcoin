@@ -8,6 +8,11 @@
     --ok: #1b7f4f;
     --erro: #b3261e;
     --aviso: #8a5a00;
+    --accent: #4f6bed;
+    --accent-escuro: #3b52cf;
+    --ciano: #2dd4bf;
+    --raio: 14px;
+    --sombra: 0 12px 32px rgba(18, 49, 76, 0.10);
 }
 
 * { box-sizing: border-box; }
@@ -150,4 +155,258 @@ tbody tr:hover { background: #f9fbfd; }
     padding: 16px;
     color: var(--muted);
     font-size: 12px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Estilos exclusivos da pagina de nova transacao (.pagina-transacao)   */
+/* ------------------------------------------------------------------ */
+
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
+::selection { background: #cfe0ff; }
+
+.pagina-transacao {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+        radial-gradient(900px 420px at 8% -10%, #e6ecff 0%, transparent 60%),
+        radial-gradient(700px 360px at 100% 0%, #e2fbf6 0%, transparent 55%),
+        var(--fundo);
+}
+
+.pagina-transacao .cabecalho {
+    padding: 18px clamp(16px, 4vw, 48px);
+    background: linear-gradient(110deg, #102a43 0%, #163f63 55%, #175e6b 100%);
+    box-shadow: 0 6px 18px rgba(16, 42, 67, 0.18);
+}
+
+.pagina-transacao .marca { display: flex; align-items: center; gap: 12px; }
+
+.marca-simbolo {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--ciano), var(--accent));
+    color: #08222f;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(45, 212, 191, 0.35);
+}
+
+.marca h1 { margin: 0; font-size: 22px; letter-spacing: -0.4px; }
+.marca p { margin: 0; font-size: 12px; color: #a9c6d8; }
+
+.pagina-transacao .cabecalho nav { gap: 8px; flex-wrap: wrap; }
+
+.pagina-transacao .cabecalho nav a {
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #dce9f5;
+    font-size: 13px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.pagina-transacao .cabecalho nav a:hover {
+    background: rgba(255, 255, 255, 0.18);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.pagina-transacao .cabecalho nav a[aria-current="page"] {
+    background: #fff;
+    border-color: #fff;
+    color: #12314c;
+    font-weight: 700;
+}
+
+.pagina-transacao .conteudo {
+    width: min(1100px, 100%);
+    flex: 1;
+    margin: 36px auto 48px;
+    gap: 24px;
+}
+
+.apresentacao { margin-bottom: 4px; }
+
+.etiqueta {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #e8edff;
+    color: var(--accent-escuro);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.apresentacao h2 {
+    margin: 10px 0 6px;
+    font-size: clamp(24px, 3vw, 34px);
+    letter-spacing: -0.02em;
+}
+
+.apresentacao p { max-width: 640px; margin: 0; color: var(--muted); }
+
+.grade-inicio {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.pagina-transacao .cartao {
+    padding: clamp(18px, 3vw, 28px);
+    border: 0;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+.pagina-transacao .cartao-formulario { border-top: 3px solid var(--accent); }
+.pagina-transacao .cartao-periodo { background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); }
+
+.cabecalho-cartao { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+
+.numero-etapa {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: #eef1ff;
+    color: var(--accent-escuro);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.cabecalho-cartao h3 { margin: 0; font-size: 18px; }
+.cabecalho-cartao p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+
+.formulario { gap: 16px; max-width: none; }
+.campo { display: grid; gap: 7px; }
+.campo label { font-size: 13px; color: #374151; }
+.campo label span { color: var(--muted); font-weight: 400; }
+.campo-entrada { position: relative; display: flex; align-items: center; }
+
+.campo-entrada .icone,
+.campo-entrada .prefixo {
+    position: absolute;
+    left: 13px;
+    color: #8a93a1;
+    font-size: 15px;
+    pointer-events: none;
+}
+
+.campo-entrada input { padding-left: 38px; }
+
+.formulario input,
+.formulario textarea {
+    padding: 11px 13px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: #fbfcfe;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.formulario input::placeholder,
+.formulario textarea::placeholder { color: #9aa3b0; }
+
+.formulario input:hover,
+.formulario textarea:hover { border-color: #b9c4d4; }
+
+.formulario input:focus,
+.formulario textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(79, 107, 237, 0.14);
+}
+
+.formulario textarea { min-height: 96px; line-height: 1.5; }
+.dica { margin: 0; font-size: 12px; color: var(--muted); }
+
+.botao-enviar {
+    justify-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 13px 18px;
+    border-radius: 11px;
+    font-size: 15px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-escuro));
+    box-shadow: 0 8px 18px rgba(79, 107, 237, 0.28);
+    transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+}
+
+.botao-enviar:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(79, 107, 237, 0.34);
+    filter: none;
+}
+
+.botao-enviar:active:not(:disabled) { transform: translateY(0); }
+.botao-enviar span[aria-hidden] { font-size: 18px; line-height: 1; }
+
+/* JS troca a classe do #status; estilos por ID garantem a caixa sempre. */
+#status.status { min-height: 0; margin-top: 16px; padding: 0; }
+
+#status.status:not(:empty) {
+    padding: 11px 13px;
+    border: 1px solid #dbe2ff;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #3348a8;
+    font-size: 13px;
+}
+
+#status.status.ok { border-color: #c6ead7; background: #e9f8f0; color: var(--ok); }
+#status.status.erro { border-color: #f5c6c2; background: #fdecea; color: var(--erro); }
+#status.status.info { border-color: #dbe2ff; background: #eef2ff; color: #3348a8; }
+
+.detalhes-inicio { grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
+
+.detalhe-item {
+    padding: 12px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: #fff;
+}
+
+.detalhe-item dt {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+}
+
+.detalhe-item dd { margin-top: 4px; }
+.chave-publica { display: grid; gap: 7px; }
+.chave-publica .rotulo { font-size: 13px; font-weight: 600; }
+
+.chave-publica code {
+    display: block;
+    max-height: 130px;
+    overflow: auto;
+    padding: 12px;
+    border-radius: 10px;
+    background: #102a43;
+    color: #b8e6df;
+    font-size: 11px;
+    line-height: 1.5;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.aviso-suave { margin: 16px 0 0; border-left-color: var(--accent); background: #f2f5ff; color: #3d4a70; }
+.pagina-transacao .rodape { padding: 20px 16px 28px; }
+
+@media (max-width: 860px) {
+    .grade-inicio { grid-template-columns: 1fr; }
 }

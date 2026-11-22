@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newCoin - transacoes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <h1>newCoin</h1>
+        <nav>
+            <a href="newcoin.html">Nova transacao</a>
+            <a href="transacoes.html">Transacoes</a>
+            <a href="teste.html">Autoteste</a>
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <section class="cartao">
+            <h2>Transacoes do periodo atual</h2>
+            <dl class="detalhes">
+                <dt>Periodo</dt>
+                <dd id="periodo-id" class="mono">...</dd>
+                <dt>Iniciado em</dt>
+                <dd id="periodo-inicio" class="mono">...</dd>
+            </dl>
+
+            <div class="tabela-responsiva">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Data/hora (ISO)</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
+                            <th>Valor</th>
+                            <th>Justificativa</th>
+                            <th>Hash</th>
+                            <th>Situacao</th>
+                            <th>Comprovante</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-transacoes"></tbody>
+                </table>
+            </div>
+
+            <p id="validacao" class="status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="cartao">
+            <h2>Encerrar periodo e arquivar</h2>
+            <p class="aviso">
+                Gera um arquivo JSON com o timestamp atual. Esse arquivo anula as datas/transacoes
+                do periodo anterior, que ficam preservadas apenas para auditoria. Um novo periodo
+                e iniciado em seguida.
+            </p>
+            <label for="motivo-encerramento">Motivo do encerramento</label>
+            <input type="text" id="motivo-encerramento" placeholder="Ex.: fechamento do lote de testes">
+            <div class="acoes">
+                <button type="button" id="btn-encerrar">Encerrar e arquivar</button>
+                <button type="button" id="btn-reiniciar" class="secundario">Reiniciar dados de teste</button>
+            </div>
+            <p id="status-acoes" class="status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="cartao">
+            <h2>Arquivos gerados (periodos invalidados)</h2>
+            <div id="lista-arquivos"></div>
+        </section>
+    </main>
+
+    <footer class="rodape">newCoin &middot; prototipo estatico &middot; sem servidor e sem API</footer>
+
+    <script src="js/index.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/transacoes.js"></script>
+</body>
+</html>
